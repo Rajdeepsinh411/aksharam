@@ -1,0 +1,159 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <title>Contact &amp; Book an Appointment | Aksharam Diagnostics, Viramgam &amp; South Bopal</title>
+  <meta name="description" content="Contact Aksharam Diagnostics in Viramgam (+91 99093 00966) or South Bopal, Ahmedabad (+91 99093 32320). Get directions, call, or request an appointment on WhatsApp. Emergency services available 24 hours.">
+  <link rel="canonical" href="https://www.aksharamdiagnostics.com/contact.html">
+  <meta name="theme-color" content="#AE1F27">
+  <meta property="og:type" content="website">
+  <meta property="og:site_name" content="Aksharam Diagnostics">
+  <meta property="og:title" content="Contact &amp; Book an Appointment | Aksharam Diagnostics">
+  <meta property="og:description" content="Two branches, open all days. Emergency services available 24 hours.">
+  <meta property="og:url" content="https://www.aksharamdiagnostics.com/contact.html">
+  <meta property="og:image" content="https://www.aksharamdiagnostics.com/assets/img/og-image.png">
+  <meta property="og:locale" content="en_IN">
+  <meta property="og:locale:alternate" content="gu_IN">
+  <meta name="twitter:card" content="summary_large_image">
+  <link rel="icon" type="image/png" href="assets/img/favicon.png">
+  <link rel="apple-touch-icon" href="assets/img/apple-touch-icon.png">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&amp;family=Noto+Sans+Gujarati:wght@400;500;600;700&amp;family=Poppins:wght@500;600;700&amp;display=swap">
+  <link rel="stylesheet" href="assets/css/style.css">
+  <script>
+    (function () {
+      var d = document.documentElement;
+      d.classList.add('js');
+      try { if (localStorage.getItem('aksharam-lang') === 'gu') { d.lang = 'gu'; d.classList.add('lang-gu'); } } catch (e) {}
+    })();
+  </script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js" defer></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js" defer></script>
+  <script src="https://unpkg.com/lenis@1.1.13/dist/lenis.min.js" defer></script>
+  <script type="module" src="assets/js/main.js"></script>
+  <script type="module" src="assets/js/contact.js"></script>
+</head>
+<body class="page-contact" data-page="contact" data-title-key="meta.contact.title" data-jsonld>
+  <div data-slot="header"></div>
+
+  <main id="main" tabindex="-1">
+    <section class="page-hero">
+      <div class="container">
+        <p class="eyebrow" data-i18n="contact.hero.eyebrow">Contact</p>
+        <h1 class="h1" data-i18n="contact.hero.title">Visit us or book an appointment.</h1>
+        <p class="lead" data-i18n="contact.hero.sub">Two branches, open all days. Emergency services available 24 hours.</p>
+      </div>
+    </section>
+
+    <!-- Branches -->
+    <section class="section" id="branches" aria-labelledby="branches-title" style="padding-top:24px">
+      <div class="container">
+        <h2 class="h2" id="branches-title" data-i18n="contact.branches.title">Our branches</h2>
+        <div class="tabs" role="tablist" data-branch-tabs data-i18n-attr="aria-label:contact.tabs" aria-label="Choose a branch"></div>
+        <div data-branch-panels></div>
+      </div>
+    </section>
+
+    <!-- Appointment form -->
+    <section class="section section--soft section--arcs" id="appointment" aria-labelledby="form-title">
+      <div class="container form-wrap">
+        <div class="form-aside">
+          <p class="eyebrow" data-i18n="nav.book">Book Appointment</p>
+          <h2 class="h2" id="form-title" data-i18n="form.title">Request an appointment</h2>
+          <p data-i18n="form.sub">Fill in the form and we will open WhatsApp with your request ready to send.</p>
+          <p class="emergency-note" style="background:#fff"><span data-render="icon" data-icon="emergency"></span><span data-i18n="common.emergencyNote">Emergency services are available 24 hours. Please call before you come.</span></p>
+          <div class="btn-row" style="margin-top:16px">
+            <a class="btn btn--red" href="tel:+919909300966" data-tel="emergency"><span data-render="icon" data-icon="phone"></span><span data-i18n="cta.call">Call Now</span></a>
+          </div>
+          <div data-render="notice"></div>
+        </div>
+
+        <form id="appointment-form" class="card form-card" novalidate>
+          <div class="form-grid">
+            <div class="field">
+              <label for="f-name"><span data-i18n="form.name">Patient name</span><span class="req" aria-hidden="true">*</span></label>
+              <input class="input" id="f-name" name="name" type="text" autocomplete="name" maxlength="80" required aria-describedby="err-name">
+              <p class="field-error" id="err-name" hidden></p>
+            </div>
+
+            <div class="field">
+              <label for="f-mobile"><span data-i18n="form.mobile">Mobile number</span><span class="req" aria-hidden="true">*</span></label>
+              <input class="input" id="f-mobile" name="mobile" type="tel" inputmode="tel" autocomplete="tel" maxlength="16" placeholder="98765 43210" required aria-describedby="hint-mobile err-mobile">
+              <p class="field-hint" id="hint-mobile" data-i18n="form.mobileHint">10-digit mobile number, +91 optional</p>
+              <p class="field-error" id="err-mobile" hidden></p>
+            </div>
+
+            <div class="field">
+              <label for="f-age"><span data-i18n="form.age">Age</span><span class="opt">(<span data-i18n="form.optional">optional</span>)</span></label>
+              <input class="input" id="f-age" name="age" type="number" inputmode="numeric" min="0" max="120" step="1" aria-describedby="err-age">
+              <p class="field-error" id="err-age" hidden></p>
+            </div>
+
+            <div class="field">
+              <label for="f-branch"><span data-i18n="form.branch">Branch</span><span class="req" aria-hidden="true">*</span></label>
+              <select class="input" id="f-branch" name="branch" required aria-describedby="err-branch">
+                <option value="" data-i18n="form.choose">Select…</option>
+              </select>
+              <p class="field-error" id="err-branch" hidden></p>
+            </div>
+
+            <div class="field field--full">
+              <label for="f-test"><span data-i18n="form.test">Test required</span><span class="req" aria-hidden="true">*</span></label>
+              <select class="input" id="f-test" name="test" required aria-describedby="err-test">
+                <option value="" data-i18n="form.choose">Select…</option>
+              </select>
+              <p class="field-error" id="err-test" hidden></p>
+            </div>
+
+            <div class="field">
+              <label for="f-date"><span data-i18n="form.date">Preferred date</span><span class="req" aria-hidden="true">*</span></label>
+              <input class="input" id="f-date" name="date" type="date" required aria-describedby="err-date">
+              <p class="field-error" id="err-date" hidden></p>
+            </div>
+
+
+            <div class="field">
+              <label for="f-referrer"><span data-i18n="form.referrer">Referring doctor</span><span class="opt">(<span data-i18n="form.optional">optional</span>)</span></label>
+              <input class="input" id="f-referrer" name="referrer" type="text" maxlength="80" autocomplete="off">
+            </div>
+
+            <fieldset class="field field--full" aria-describedby="err-slot">
+              <legend><span data-i18n="form.slot">Preferred time</span><span class="req" aria-hidden="true">*</span></legend>
+              <div class="segmented">
+                <label><input type="radio" name="slot" value="morning" required><span data-i18n="slot.morning">Morning</span></label>
+                <label><input type="radio" name="slot" value="afternoon"><span data-i18n="slot.afternoon">Afternoon</span></label>
+                <label><input type="radio" name="slot" value="evening"><span data-i18n="slot.evening">Evening</span></label>
+              </div>
+              <p class="field-error" id="err-slot" hidden></p>
+            </fieldset>
+
+            <div class="field field--full">
+              <label for="f-message"><span data-i18n="form.message">Message</span><span class="opt">(<span data-i18n="form.optional">optional</span>)</span></label>
+              <textarea class="input" id="f-message" name="message" maxlength="500" rows="4"></textarea>
+            </div>
+          </div>
+
+          <div class="form-foot">
+            <p class="field-hint" data-i18n="form.required">Fields marked * are required.</p>
+            <button type="submit" class="btn btn--wa btn--block"><span data-render="icon" data-icon="whatsapp"></span><span data-i18n="form.submit">Send request on WhatsApp</span></button>
+            <p class="privacy-note"><span data-render="icon" data-icon="info"></span><span data-i18n="form.privacy">Please don’t share medical reports or sensitive details here; our team will guide you on call.</span></p>
+          </div>
+
+          <div class="form-success" id="form-success" role="status" tabindex="-1" hidden>
+            <span data-render="icon" data-icon="check"></span>
+            <div>
+              <strong data-i18n="form.success.title">Your request is ready in WhatsApp — just tap Send.</strong>
+              <p data-i18n="form.success.text">For emergencies, please call us directly.</p>
+              <a id="form-again" href="https://wa.me/919909300966" target="_blank" rel="noopener" data-i18n="form.success.again">Open WhatsApp again</a>
+            </div>
+          </div>
+        </form>
+      </div>
+    </section>
+  </main>
+
+  <div data-slot="footer"></div>
+</body>
+</html>

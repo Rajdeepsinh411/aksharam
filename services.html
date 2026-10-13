@@ -1,0 +1,100 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <title>CT Scan, Digital X-Ray, Sonography &amp; Colour Doppler | Aksharam Diagnostics</title>
+  <meta name="description" content="16-slice MDCT and HRCT chest, digital X-ray, sonography, 3D/4D sonography and colour Doppler at Aksharam Diagnostics, Viramgam and South Bopal. What each test is, how long it takes and how to prepare.">
+  <link rel="canonical" href="https://www.aksharamdiagnostics.com/services.html">
+  <meta name="theme-color" content="#AE1F27">
+  <meta property="og:type" content="website">
+  <meta property="og:site_name" content="Aksharam Diagnostics">
+  <meta property="og:title" content="CT Scan, Digital X-Ray, Sonography &amp; Colour Doppler | Aksharam Diagnostics">
+  <meta property="og:description" content="What each test is, when doctors usually advise it, how long it takes and how to prepare.">
+  <meta property="og:url" content="https://www.aksharamdiagnostics.com/services.html">
+  <meta property="og:image" content="https://www.aksharamdiagnostics.com/assets/img/og-image.png">
+  <meta property="og:locale" content="en_IN">
+  <meta property="og:locale:alternate" content="gu_IN">
+  <meta name="twitter:card" content="summary_large_image">
+  <link rel="icon" type="image/png" href="assets/img/favicon.png">
+  <link rel="apple-touch-icon" href="assets/img/apple-touch-icon.png">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&amp;family=Noto+Sans+Gujarati:wght@400;500;600;700&amp;family=Poppins:wght@500;600;700&amp;display=swap">
+  <link rel="stylesheet" href="assets/css/style.css">
+  <script>
+    (function () {
+      var d = document.documentElement;
+      d.classList.add('js');
+      try { if (localStorage.getItem('aksharam-lang') === 'gu') { d.lang = 'gu'; d.classList.add('lang-gu'); } } catch (e) {}
+    })();
+  </script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js" defer></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js" defer></script>
+  <script src="https://unpkg.com/lenis@1.1.13/dist/lenis.min.js" defer></script>
+  <script type="module" src="assets/js/main.js"></script>
+</head>
+<body class="page-services" data-page="services" data-title-key="meta.services.title">
+  <div data-slot="header"></div>
+
+  <main id="main" tabindex="-1">
+    <section class="page-hero">
+      <div class="container">
+        <p class="eyebrow" data-i18n="services.hero.eyebrow">Services</p>
+        <h1 class="h1" data-i18n="services.hero.title">Diagnostic imaging, explained simply.</h1>
+        <p class="lead" data-i18n="services.hero.sub">What each test is, when doctors usually advise it, how long it takes and how to prepare.</p>
+        <nav data-i18n-attr="aria-label:services.jump" aria-label="Jump to a service">
+          <ul class="chips" data-render="service-chips"></ul>
+        </nav>
+      </div>
+    </section>
+
+    <!-- One section per active service (rendered from config.js + i18n.js) -->
+    <div data-render="services-detail"></div>
+
+    <!-- Preparation guide -->
+    <section class="section section--soft section--arcs" id="preparation" aria-labelledby="prep-title">
+      <div class="container">
+        <div class="section-head" data-reveal>
+          <p class="eyebrow" data-i18n="prep.sub">General guidance to help you get ready.</p>
+          <h2 class="h2" id="prep-title" data-i18n="prep.title">Patient preparation guide</h2>
+        </div>
+        <div class="accordion" data-reveal-stagger>
+          <details class="acc" open>
+            <summary><span class="icon-circle"><span data-render="icon" data-icon="ct"></span></span><span data-i18n="prep.ct.title">CT scan with contrast</span></summary>
+            <div class="acc__body"><ul class="check-list" data-i18n-list="prep.ct.items"></ul></div>
+          </details>
+          <details class="acc">
+            <summary><span class="icon-circle"><span data-render="icon" data-icon="usg"></span></span><span data-i18n="prep.usg.title">Abdomen / pelvis sonography</span></summary>
+            <div class="acc__body"><ul class="check-list" data-i18n-list="prep.usg.items"></ul></div>
+          </details>
+          <details class="acc">
+            <summary><span class="icon-circle"><span data-render="icon" data-icon="xray"></span></span><span data-i18n="prep.xray.title">X-ray</span></summary>
+            <div class="acc__body"><ul class="check-list" data-i18n-list="prep.xray.items"></ul></div>
+          </details>
+          <details class="acc">
+            <summary><span class="icon-circle"><span data-render="icon" data-icon="doctor"></span></span><span data-i18n="prep.bring.title">What to bring</span></summary>
+            <div class="acc__body"><ul class="check-list" data-i18n-list="prep.bring.items"></ul></div>
+          </details>
+        </div>
+        <p class="prep-note" data-reveal><span data-render="icon" data-icon="info"></span><span data-i18n="prep.note">These are general guidelines. Our team will confirm exact instructions when you book.</span></p>
+      </div>
+    </section>
+
+    <section class="cta-strip on-dark" aria-labelledby="strip-title">
+      <div class="container cta-strip__inner">
+        <div>
+          <h2 id="strip-title" data-i18n="strip.title">Need a scan today? Call or WhatsApp us.</h2>
+          <p data-i18n="strip.text">Our team will help you choose a time and explain any preparation.</p>
+        </div>
+        <div class="btn-row">
+          <a class="btn btn--light" href="tel:+919909300966" data-tel="emergency"><span data-render="icon" data-icon="phone"></span><span data-i18n="cta.call">Call Now</span></a>
+          <a class="btn btn--wa" href="https://wa.me/919909300966" target="_blank" rel="noopener" data-wa-hello><span data-render="icon" data-icon="whatsapp"></span><span data-i18n="cta.whatsapp">WhatsApp Us</span></a>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <div data-slot="footer"></div>
+</body>
+</html>

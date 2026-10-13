@@ -1,0 +1,270 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <title>Aksharam Diagnostics | CT Scan, X-Ray &amp; Sonography in Viramgam and South Bopal</title>
+  <meta name="description" content="Aksharam Diagnostics: 16-slice MDCT scan, HRCT chest, digital X-ray, sonography, 3D/4D sonography and colour Doppler in Viramgam and South Bopal, Ahmedabad. Emergency services available 24 hours.">
+  <link rel="canonical" href="https://www.aksharamdiagnostics.com/">
+  <meta name="theme-color" content="#AE1F27">
+  <meta property="og:type" content="website">
+  <meta property="og:site_name" content="Aksharam Diagnostics">
+  <meta property="og:title" content="Aksharam Diagnostics | CT Scan, X-Ray &amp; Sonography in Viramgam and South Bopal">
+  <meta property="og:description" content="Advanced CT, X-Ray and Sonography in Viramgam and South Bopal. Emergency services available 24 hours.">
+  <meta property="og:url" content="https://www.aksharamdiagnostics.com/">
+  <meta property="og:image" content="https://www.aksharamdiagnostics.com/assets/img/og-image.png">
+  <meta property="og:image:width" content="1200">
+  <meta property="og:image:height" content="630">
+  <meta property="og:locale" content="en_IN">
+  <meta property="og:locale:alternate" content="gu_IN">
+  <meta name="twitter:card" content="summary_large_image">
+  <link rel="icon" type="image/png" href="assets/img/favicon.png">
+  <link rel="apple-touch-icon" href="assets/img/apple-touch-icon.png">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&amp;family=Noto+Sans+Gujarati:wght@400;500;600;700&amp;family=Poppins:wght@500;600;700&amp;display=swap">
+  <link rel="stylesheet" href="assets/css/style.css">
+  <script>
+    (function () {
+      var d = document.documentElement;
+      d.classList.add('js');
+      try { if (localStorage.getItem('aksharam-lang') === 'gu') { d.lang = 'gu'; d.classList.add('lang-gu'); } } catch (e) {}
+      var rm = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+      if (rm || !window.WebGLRenderingContext) d.classList.add('no-3d');
+    })();
+  </script>
+  <script type="importmap">
+    {
+      "imports": {
+        "three": "https://cdn.jsdelivr.net/npm/three@0.169.0/build/three.module.js",
+        "three/addons/": "https://cdn.jsdelivr.net/npm/three@0.169.0/examples/jsm/"
+      }
+    }
+  </script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js" defer></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js" defer></script>
+  <script src="https://unpkg.com/lenis@1.1.13/dist/lenis.min.js" defer></script>
+  <script type="module" src="assets/js/main.js"></script>
+</head>
+<body class="page-home" data-page="home" data-title-key="meta.home.title" data-jsonld>
+  <div data-slot="header"></div>
+
+  <div class="loader" aria-hidden="true">
+    <div class="loader__inner">
+      <img src="assets/img/logo.png" alt="" width="588" height="172">
+      <div class="loader__bar"><span></span></div>
+    </div>
+  </div>
+
+  <div class="scene" aria-hidden="true"><canvas id="scene-canvas"></canvas></div>
+
+  <main id="main" tabindex="-1">
+    <!-- 3D story: each step drives one stage of the scene -->
+    <section class="story" id="story" aria-label="How a scan happens">
+      <div class="story-step story-step--hero">
+        <svg class="hero-fallback" viewBox="0 0 640 480" aria-hidden="true" focusable="false">
+          <defs>
+            <radialGradient id="fb-floor" cx="50%" cy="50%" r="50%">
+              <stop offset="0" stop-color="#000" stop-opacity=".5" />
+              <stop offset="1" stop-color="#000" stop-opacity="0" />
+            </radialGradient>
+            <linearGradient id="fb-shell" x1="0" y1="0" x2="1" y2="1">
+              <stop offset="0" stop-color="#ffffff" />
+              <stop offset="1" stop-color="#cdd1d7" />
+            </linearGradient>
+            <linearGradient id="fb-patient" x1="0" y1="0" x2="0" y2="1">
+              <stop offset="0" stop-color="#eef3f8" stop-opacity=".85" />
+              <stop offset="1" stop-color="#c3cedb" stop-opacity=".55" />
+            </linearGradient>
+          </defs>
+          <g fill="none" stroke="#3c4047" stroke-width="2" stroke-linecap="round">
+            <path d="M90 452a330 46 0 0 1 560 0" opacity=".9" />
+            <path d="M40 468a380 52 0 0 1 640 0" opacity=".6" />
+          </g>
+          <ellipse cx="350" cy="432" rx="270" ry="30" fill="url(#fb-floor)" />
+          <rect x="300" y="350" width="170" height="80" rx="16" fill="#dfe2e6" />
+          <circle cx="385" cy="215" r="170" fill="url(#fb-shell)" />
+          <circle cx="385" cy="215" r="152" fill="none" stroke="#ae1f27" stroke-width="4" />
+          <circle cx="385" cy="215" r="102" fill="#5e6066" />
+          <circle cx="385" cy="215" r="92" fill="none" stroke="#a3a7ad" stroke-width="6" stroke-dasharray="10 14" />
+          <circle cx="385" cy="215" r="84" fill="#25282d" />
+          <rect x="355" y="76" width="60" height="22" rx="7" fill="#2a2d32" />
+          <circle cx="404" cy="87" r="3.5" fill="#ff3a48" />
+          <rect x="118" y="292" width="72" height="140" rx="12" fill="#dfe2e6" />
+          <rect x="96" y="424" width="116" height="10" rx="5" fill="#5e6066" />
+          <rect x="20" y="268" width="420" height="18" rx="9" fill="#ffffff" />
+          <rect x="20" y="284" width="420" height="3" rx="1.5" fill="#ae1f27" />
+          <rect x="30" y="259" width="400" height="11" rx="5.5" fill="#c9d1da" />
+          <rect x="70" y="228" width="300" height="32" rx="16" fill="url(#fb-patient)" />
+          <ellipse cx="392" cy="242" rx="20" ry="18" fill="url(#fb-patient)" />
+          <g fill="none" stroke-linecap="round" stroke-width="5">
+            <path d="M573.6 170A70 70 0 0 1 573.6 260" stroke="#ff3a48" />
+            <path d="M588.9 157.1A90 90 0 0 1 588.9 272.9" stroke="#d3d6db" opacity=".75" />
+            <path d="M604.3 144.3A110 110 0 0 1 604.3 285.7" stroke="#d3d6db" opacity=".45" />
+          </g>
+        </svg>
+        <div class="container">
+          <div class="hero__content">
+            <div class="hero__logo"><img src="assets/img/logo.png" alt="Aksharam Diagnostics" width="588" height="172" fetchpriority="high"></div>
+            <p class="eyebrow" data-i18n="hero.eyebrow">Radiology &amp; diagnostic imaging</p>
+            <h1 class="h1 hero__title" data-i18n="hero.title">Clarity you can trust.</h1>
+            <p class="hero__sub" data-i18n="hero.sub">Advanced CT, X-Ray and Sonography in Viramgam and South Bopal. Emergency services available 24 hours.</p>
+            <div class="hero__ctas">
+              <a class="btn btn--red" href="contact.html#appointment"><span data-i18n="cta.book">Book an Appointment</span></a>
+              <a class="btn btn--outline-light" href="tel:+919909300966" data-tel="emergency"><span data-render="icon" data-icon="phone"></span><span data-i18n="cta.call">Call Now</span></a>
+            </div>
+            <p class="hero__scroll" data-i18n="hero.scroll">Scroll to see how a scan happens</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="story-step">
+        <div class="container">
+          <article class="story-card">
+            <p class="kicker" data-i18n="story.prep.kicker">Step 1 · Preparing for the scan</p>
+            <h2 data-i18n="story.prep.title">Calm, comfortable and quick.</h2>
+            <p data-i18n="story.prep.text">Our trained staff explain each step before you begin and help you settle comfortably on the scan table. Most scans take only a few minutes, and someone is always close by.</p>
+          </article>
+        </div>
+      </div>
+
+      <div class="story-step">
+        <div class="container">
+          <article class="story-card">
+            <p class="kicker" data-i18n="story.scan.kicker">Step 2 · Scanning</p>
+            <h2 data-i18n="story.scan.title">16-slice MDCT, including HRCT chest.</h2>
+            <p data-i18n="story.scan.text">Our 16-slice multi-detector CT captures fine cross-sectional images within seconds. It supports a wide range of studies, including high-resolution CT (HRCT) of the chest, as advised by your doctor.</p>
+          </article>
+        </div>
+      </div>
+
+      <div class="story-step">
+        <div class="container">
+          <article class="story-card">
+            <p class="kicker" data-i18n="story.slices.kicker">Step 3 · Slices to image</p>
+            <h2 data-i18n="story.slices.title">Detailed images, read by qualified radiologists.</h2>
+            <p data-i18n="story.slices.text">Each thin slice becomes part of one detailed picture. Our radiologists review the images carefully and prepare a clear report for your doctor.</p>
+          </article>
+        </div>
+      </div>
+
+      <div class="story-step">
+        <div class="container">
+          <article class="story-card">
+            <p class="kicker" data-i18n="story.us.kicker">Step 4 · Ultrasound</p>
+            <h2 data-i18n="story.us.title">Sonography, 3D/4D and colour Doppler.</h2>
+            <p data-i18n="story.us.text">Ultrasound uses sound waves, not radiation. We offer abdomen, pelvis and obstetric sonography, 3D/4D sonography for detailed foetal anatomy assessment, and colour Doppler to study blood flow.</p>
+            <div data-render="notice"></div>
+          </article>
+        </div>
+      </div>
+
+      <div class="story-step">
+        <div class="container">
+          <article class="story-card">
+            <p class="kicker" data-i18n="story.report.kicker">Step 5 · Report ready</p>
+            <h2 data-i18n="story.report.title">Your report, without the wait.</h2>
+            <p data-i18n="story.report.text">We work to share reports promptly, and our team will tell you when yours will be ready. Urgent and emergency cases are given priority.</p>
+            <div class="btn-row">
+              <a class="btn btn--red" href="contact.html#appointment"><span data-i18n="cta.book">Book an Appointment</span></a>
+              <a class="btn btn--wa" href="https://wa.me/919909300966" target="_blank" rel="noopener" data-wa-hello><span data-render="icon" data-icon="whatsapp"></span><span data-i18n="cta.whatsapp">WhatsApp Us</span></a>
+            </div>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <!-- Services -->
+    <section class="section section--arcs" id="services" aria-labelledby="services-title">
+      <div class="container">
+        <div class="section-head" data-reveal>
+          <p class="eyebrow" data-i18n="nav.services">Services</p>
+          <h2 class="h2" id="services-title" data-i18n="home.services.title">Our services</h2>
+          <p data-i18n="home.services.sub">Modern diagnostic imaging under one roof, close to home.</p>
+        </div>
+        <div class="grid grid--3" data-render="services" data-reveal-stagger></div>
+        <p style="margin-top:32px" data-reveal><a class="btn btn--ghost" href="services.html"><span data-i18n="cta.allServices">View all services</span><span data-render="icon" data-icon="arrow"></span></a></p>
+        <div data-render="notice"></div>
+      </div>
+    </section>
+
+    <!-- Why Aksharam -->
+    <section class="section section--soft" id="why" aria-labelledby="why-title">
+      <div class="container">
+        <div class="section-head section-head--center" data-reveal>
+          <p class="eyebrow" data-i18n="why.title">Why Aksharam</p>
+          <h2 class="h2" id="why-title" data-i18n="why.sub">Careful imaging, clear guidance and help when you need it.</h2>
+        </div>
+        <div class="grid grid--4" data-reveal-stagger>
+          <article class="card why-card">
+            <span class="icon-circle"><span data-render="icon" data-icon="doctor"></span></span>
+            <h3 class="card__title" data-i18n="why.doctors.title">Qualified radiologists</h3>
+            <p class="card__text" data-i18n="why.doctors.text">Your images are reviewed by our radiologists: an M.D. (Radiology) and a D.M.R.E. (Radiology).</p>
+          </article>
+          <article class="card why-card">
+            <span class="icon-circle"><span data-render="icon" data-icon="ct"></span></span>
+            <h3 class="card__title" data-i18n="why.ct.title">Modern 16-slice CT</h3>
+            <p class="card__text" data-i18n="why.ct.text">Multi-detector CT for fast, detailed cross-sectional imaging, alongside digital X-ray and colour Doppler.</p>
+          </article>
+          <article class="card why-card">
+            <span class="icon-circle"><span data-render="icon" data-icon="emergency"></span></span>
+            <h3 class="card__title" data-i18n="why.emergency.title">24-hour emergency imaging</h3>
+            <p class="card__text" data-i18n="why.emergency.text">Emergency services are available round the clock. Please call before you come so we can be ready for you.</p>
+          </article>
+          <article class="card why-card">
+            <span class="icon-circle"><span data-render="icon" data-icon="branches"></span></span>
+            <h3 class="card__title" data-i18n="why.branches.title">Two convenient branches</h3>
+            <p class="card__text" data-i18n="why.branches.text">Viramgam and South Bopal, Ahmedabad, so advanced diagnostics are close to home.</p>
+          </article>
+        </div>
+        <div class="badges" style="justify-content:center" data-reveal>
+          <span class="badge"><span data-render="icon" data-icon="wheelchair"></span><span data-i18n="common.wheelchair">Wheelchair-accessible entry</span></span>
+          <span class="badge"><span data-render="icon" data-icon="parking"></span><span data-i18n="common.parking">On-site parking</span></span>
+        </div>
+      </div>
+    </section>
+
+    <!-- Doctors -->
+    <section class="section" id="doctors" aria-labelledby="doctors-title">
+      <div class="container">
+        <div class="section-head" data-reveal>
+          <p class="eyebrow" data-i18n="about.doctors.title">Our radiologists</p>
+          <h2 class="h2" id="doctors-title" data-i18n="doctors.title">Our doctors</h2>
+          <p data-i18n="doctors.sub">Every report is prepared by a qualified radiologist.</p>
+        </div>
+        <div class="grid grid--2" data-render="doctors" data-reveal-stagger></div>
+        <p style="margin-top:32px" data-reveal><a class="btn btn--ghost" href="about.html"><span data-i18n="cta.aboutUs">More about us</span><span data-render="icon" data-icon="arrow"></span></a></p>
+      </div>
+    </section>
+
+    <!-- Branches -->
+    <section class="section section--soft section--arcs" id="branches" aria-labelledby="branches-title">
+      <div class="container">
+        <div class="section-head" data-reveal>
+          <p class="eyebrow" data-i18n="common.emergency24">Emergency services available 24 hours</p>
+          <h2 class="h2" id="branches-title" data-i18n="branches.title">Our branches</h2>
+          <p data-i18n="branches.sub">Visit the branch nearest to you. Both are open all days.</p>
+        </div>
+        <div class="grid grid--2" data-render="branches" data-reveal-stagger></div>
+      </div>
+    </section>
+
+    <!-- CTA strip -->
+    <section class="cta-strip on-dark" aria-labelledby="strip-title">
+      <div class="container cta-strip__inner">
+        <div>
+          <h2 id="strip-title" data-i18n="strip.title">Need a scan today? Call or WhatsApp us.</h2>
+          <p data-i18n="strip.text">Our team will help you choose a time and explain any preparation.</p>
+        </div>
+        <div class="btn-row">
+          <a class="btn btn--light" href="tel:+919909300966" data-tel="emergency"><span data-render="icon" data-icon="phone"></span><span data-i18n="cta.call">Call Now</span></a>
+          <a class="btn btn--wa" href="https://wa.me/919909300966" target="_blank" rel="noopener" data-wa-hello><span data-render="icon" data-icon="whatsapp"></span><span data-i18n="cta.whatsapp">WhatsApp Us</span></a>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <div data-slot="footer"></div>
+</body>
+</html>
