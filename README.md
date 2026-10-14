@@ -113,16 +113,29 @@ The visitor's language choice is remembered in their browser.
 
 ### Netlify
 1. Go to https://app.netlify.com → **Add new site → Deploy manually** and drag this folder in, or connect a Git repository with no build command and publish directory `/`.
-2. Open **Domain management → Add a domain** and enter `aksharamdiagnostics.com`, then follow the DNS instructions (Netlify DNS, or an `A`/`CNAME` record at your registrar). HTTPS is automatic.
+2. Open **Domain management → Add a domain** and enter `aksharamdiagnostics.store`, then follow the DNS instructions (Netlify DNS, or an `A`/`CNAME` record at your registrar). HTTPS is automatic.
 
-### GitHub Pages
-1. Push this folder to a GitHub repository, with `index.html` at the root.
-2. Go to **Settings → Pages → Build and deployment**, choose *Deploy from a branch*, then `main` / `/ (root)`.
-3. Under **Custom domain**, enter `www.aksharamdiagnostics.com`. This creates a `CNAME` file.
-4. At your domain registrar:
-   - `CNAME` record: `www` → `<your-github-username>.github.io`
-   - `A` records for the bare domain `@`: `185.199.108.153`, `185.199.109.153`, `185.199.110.153`, `185.199.111.153`
-5. Tick **Enforce HTTPS** once the certificate is issued.
+### GitHub Pages (current live setup)
+The site is hosted on GitHub Pages from the `main` branch of
+<https://github.com/Rajdeepsinh411/aksharam>, at **https://aksharamdiagnostics.store**.
+
+To update the live site, commit your changes and run `git push`. GitHub republishes within a minute or two.
+
+The `CNAME` file holds the custom domain, so don't delete it. The empty `.nojekyll` file tells GitHub to serve the files as-is.
+
+If the domain ever changes, find-and-replace `https://aksharamdiagnostics.store` across the four `.html` files, set `siteUrl` in `assets/js/config.js`, and update `CNAME`.
+
+DNS records at the domain registrar:
+
+| Type  | Host / Name | Value                       |
+|-------|-------------|-----------------------------|
+| A     | `@`         | `185.199.108.153`           |
+| A     | `@`         | `185.199.109.153`           |
+| A     | `@`         | `185.199.110.153`           |
+| A     | `@`         | `185.199.111.153`           |
+| CNAME | `www`       | `rajdeepsinh411.github.io`  |
+
+Tick **Enforce HTTPS** in **Settings → Pages** once the certificate is issued.
 
 ### Shared hosting (cPanel etc.)
 Upload all files and folders into `public_html/`.

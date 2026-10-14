@@ -6,7 +6,7 @@
  */
 export const config = {
   name: { en: 'Aksharam Diagnostics', gu: 'અક્ષરમ્ ડાયગ્નોસ્ટિક્સ' },
-  siteUrl: 'https://www.aksharamdiagnostics.com',
+  siteUrl: 'https://aksharamdiagnostics.store',
   email: 'aksharamdiagnostics@gmail.com',
 
   // WhatsApp number in international format, digits only (country code + number).
