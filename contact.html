@@ -22,6 +22,7 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&amp;family=Noto+Sans+Gujarati:wght@400;500;600;700&amp;family=Poppins:wght@500;600;700&amp;display=swap">
   <link rel="stylesheet" href="assets/css/style.css">
+  <link rel="preload" as="image" type="image/avif" imagesrcset="assets/img/photos/hero-contact-640.avif 640w, assets/img/photos/hero-contact-1280.avif 1280w, assets/img/photos/hero-contact-1920.avif 1920w" imagesizes="100vw" fetchpriority="high">
   <script>
     (function () {
       var d = document.documentElement;
@@ -39,7 +40,8 @@
   <div data-slot="header"></div>
 
   <main id="main" tabindex="-1">
-    <section class="page-hero">
+    <section class="page-hero page-hero--photo">
+      <div class="page-hero__media" data-render="photo" data-photo="hero-contact" data-sizes="100vw" data-eager></div>
       <div class="container">
         <p class="eyebrow" data-i18n="contact.hero.eyebrow">Contact</p>
         <h1 class="h1" data-i18n="contact.hero.title">Visit us or book an appointment.</h1>

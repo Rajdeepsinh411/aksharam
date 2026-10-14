@@ -6,6 +6,7 @@
  */
 import { config, activeServices, directionsUrl, whatsappUrl } from './config.js';
 import { t, L, getLang, storedLang, setLang, applyI18n } from './i18n.js';
+import { pictureHTML, creditsHTML, photos } from './media.js';
 
 const root = document.documentElement;
 export const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
@@ -20,7 +21,7 @@ if (hasGsap) window.gsap.registerPlugin(window.ScrollTrigger);
 /* Icons (inline SVG, line style; .ic-accent strokes use brand red)    */
 /* ------------------------------------------------------------------ */
 const svg = (inner) =>
-  `<svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false">${inner}</svg>`;
+  `<svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false">${inner.replace(/<(path|circle|rect)(?=\s)/g, '<$1 pathLength="1"')}</svg>`;
 
 export const icons = {
   phone: svg('<path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.13.96.36 1.9.7 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.91.34 1.85.57 2.81.7A2 2 0 0 1 22 16.92z"/>'),
@@ -199,6 +200,11 @@ function footerHTML() {
         </div>
       </div>
       ${noticeHTML('notice--footer')}
+      <details class="footer__credits">
+        <summary data-i18n="footer.credits">${esc(t('footer.credits'))}</summary>
+        <p data-i18n="footer.creditsIntro">${esc(t('footer.creditsIntro'))}</p>
+        <ul>${creditsHTML()}</ul>
+      </details>
       <div class="footer__bottom">
         <p data-i18n="footer.disclaimer">${esc(t('footer.disclaimer'))}</p>
         <p>© <span data-year>${new Date().getFullYear()}</span> <span data-cfg="name">${esc(L(config.name))}</span>. <span data-i18n="footer.rights">${esc(t('footer.rights'))}</span></p>
@@ -225,9 +231,13 @@ function mountLayout() {
 /* ------------------------------------------------------------------ */
 /* Content blocks rendered from config                                 */
 /* ------------------------------------------------------------------ */
+const CARD_SIZES = '(min-width: 1200px) 360px, (min-width: 1024px) 30vw, (min-width: 640px) 46vw, 92vw';
+
 function serviceCard(s) {
+  const photo = photos[`svc-${s.id}`];
   return `
-  <a class="card card--link service-card" href="services.html#svc-${s.id}">
+  <a class="card card--link service-card${photo ? ' service-card--photo' : ''}" href="services.html#svc-${s.id}">
+    ${photo ? `<div class="card__media">${pictureHTML(`svc-${s.id}`, { sizes: CARD_SIZES })}</div>` : ''}
     <span class="icon-circle">${icons[serviceIcon[s.id]]}</span>
     <h3 class="card__title" data-i18n="svc.${s.id}.name">${esc(t(`svc.${s.id}.name`))}</h3>
     <p class="card__text" data-i18n="svc.${s.id}.short">${esc(t(`svc.${s.id}.short`))}</p>
@@ -282,6 +292,7 @@ function serviceDetail(s, i) {
         ${sono ? noticeHTML() : ''}
       </div>
       <aside class="card svc-detail__side" data-reveal>
+        ${photos[`svc-${s.id}`] ? `<div class="svc-detail__media">${pictureHTML(`svc-${s.id}`, { sizes: '(min-width: 1024px) 400px, 92vw' })}</div>` : ''}
         <p class="svc-detail__label">${icons.clock}<span data-i18n="services.duration">${esc(t('services.duration'))}</span></p>
         <p class="svc-detail__duration" data-i18n="svc.${s.id}.duration">${esc(t(`svc.${s.id}.duration`))}</p>
         <a class="btn btn--red btn--block" href="contact.html?test=${s.id}#appointment"><span data-i18n="cta.bookTest">${esc(t('cta.bookTest'))}</span>${icons.arrow}</a>
@@ -317,6 +328,13 @@ function renderBlocks() {
         break;
       case 'icon':
         el.outerHTML = icons[el.dataset.icon] || '';
+        break;
+      case 'photo':
+        el.innerHTML = pictureHTML(el.dataset.photo, {
+          sizes: el.dataset.sizes || '100vw',
+          eager: el.hasAttribute('data-eager'),
+          note: !el.hasAttribute('data-no-note')
+        });
         break;
     }
   });
@@ -507,31 +525,35 @@ function headerOffset() {
 /* Reveal animations                                                   */
 /* ------------------------------------------------------------------ */
 function initReveals() {
-  if (!hasGsap || reduceMotion) return;
-  const { gsap } = window;
-  gsap.utils.toArray('[data-reveal]').forEach((el) => {
-    gsap.from(el, {
-      y: 28,
-      autoAlpha: 0,
-      duration: 0.8,
-      ease: 'power2.out',
-      clearProps: 'transform,opacity,visibility',
-      scrollTrigger: { trigger: el, start: 'top 88%', once: true }
-    });
+  // One IntersectionObserver + CSS transitions (fade, slight rise, blur → sharp, staggered).
+  // Far cheaper than a ScrollTrigger per element, which matters on phones.
+  if (reduceMotion || !('IntersectionObserver' in window)) return;
+  const groups = [
+    ...Array.from(document.querySelectorAll('[data-reveal]'), (el) => [el]),
+    ...Array.from(document.querySelectorAll('[data-reveal-stagger]'), (el) => Array.from(el.children))
+  ].filter((g) => g.length);
+  const all = groups.flat();
+  all.forEach((el) => {
+    el.classList.add('reveal');
+    if (el.querySelector('.icon-circle .icon')) el.classList.add('icons-pending');
   });
-  gsap.utils.toArray('[data-reveal-stagger]').forEach((el) => {
-    const items = Array.from(el.children);
-    if (!items.length) return;
-    gsap.from(items, {
-      y: 28,
-      autoAlpha: 0,
-      duration: 0.7,
-      ease: 'power2.out',
-      stagger: 0.08,
-      clearProps: 'transform,opacity,visibility',
-      scrollTrigger: { trigger: el, start: 'top 85%', once: true }
-    });
-  });
+  groups.forEach((g) => g.forEach((el, i) => el.style.setProperty('--reveal-i', String(i))));
+  root.classList.add('reveals');
+  const io = new IntersectionObserver(
+    (entries) =>
+      entries.forEach((e) => {
+        if (!e.isIntersecting) return;
+        const el = e.target;
+        io.unobserve(el);
+        el.classList.add('is-revealed');
+        const delay = Number(el.style.getPropertyValue('--reveal-i') || 0) * 80;
+        setTimeout(() => el.classList.remove('icons-pending'), 120 + delay);
+        // hand the element back to its own transitions (e.g. card hover lift) once it has settled
+        setTimeout(() => el.classList.remove('reveal', 'is-revealed'), 1100 + delay);
+      }),
+    { rootMargin: '0px 0px -10% 0px' }
+  );
+  all.forEach((el) => io.observe(el));
 }
 
 /* ------------------------------------------------------------------ */
@@ -581,28 +603,64 @@ function initLoader() {
 
 async function initHome() {
   const loader = initLoader();
-  loader.progress(0.2);
+  loader.progress(0.1);
   initStoryText();
+  const sceneEl = document.querySelector('.scene');
+  const story = document.getElementById('story');
+  const reportEl = document.querySelector('.scene-report');
+  const canvas = document.getElementById('scene-canvas');
 
-  if (root.classList.contains('no-3d')) {
+  const fallback = async (tier) => {
+    root.dataset.tier = tier;
+    const fb = await import('./story-fallback.js');
+    if (tier === 'low') fb.initStoryVideo({ sceneEl, story, reportEl, onFail: () => fallback('still') });
+    else fb.initStills({ sceneEl, story, reportEl });
+    if (hasGsap) {
+      window.gsap.to(sceneEl, { autoAlpha: 0, ease: 'none', scrollTrigger: { trigger: story, start: 'bottom bottom', end: 'bottom 35%', scrub: true } });
+      window.ScrollTrigger.refresh();
+    }
+  };
+
+  let tier = 'still';
+  try {
+    const { detectTier } = await import('./scene/tier.js');
+    tier = await detectTier({ reduceMotion });
+  } catch (e) {
+    tier = reduceMotion ? 'still' : 'low';
+  }
+  root.dataset.tier = tier;
+  if (tier === 'still' || tier === 'low') {
+    await fallback(tier);
     loader.done();
     return;
   }
+
   try {
-    const { initScene } = await import('./scene.js');
-    loader.progress(0.6);
-    await initScene({
-      canvas: document.getElementById('scene-canvas'),
-      story: document.getElementById('story'),
-      reduceMotion,
-      onProgress: (p) => loader.progress(0.6 + p * 0.4),
+    const [{ initScene }, rec] = await Promise.all([import('./scene.js'), import('./scene/record.js')]);
+    const record = rec.recordOptions();
+    loader.progress(0.25);
+    const ctrl = await initScene({
+      canvas,
+      story,
+      tier,
+      reportEl,
+      record,
+      onProgress: (p) => loader.progress(0.25 + p * 0.75),
       onReady: () => loader.done()
     });
+    if (record) {
+      loader.done();
+      window.__scene = ctrl; // for tools/record.mjs diagnostics
+      rec.startRecorder(ctrl, record);
+    }
+    window.addEventListener('scene:lost', () => {
+      canvas.remove();
+      fallback('still');
+    }, { once: true });
   } catch (err) {
-    console.warn('3D scene unavailable, showing static illustration.', err);
-    root.classList.add('no-3d');
+    console.warn('3D scene unavailable, showing still frames.', err);
+    await fallback('still');
     loader.done();
-    if (hasGsap) window.ScrollTrigger.refresh();
   }
 }
 

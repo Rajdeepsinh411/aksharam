@@ -22,6 +22,7 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&amp;family=Noto+Sans+Gujarati:wght@400;500;600;700&amp;family=Poppins:wght@500;600;700&amp;display=swap">
   <link rel="stylesheet" href="assets/css/style.css">
+  <link rel="preload" as="image" type="image/avif" imagesrcset="assets/img/photos/hero-about-640.avif 640w, assets/img/photos/hero-about-1280.avif 1280w, assets/img/photos/hero-about-1920.avif 1920w" imagesizes="100vw" fetchpriority="high">
   <script>
     (function () {
       var d = document.documentElement;
@@ -38,7 +39,8 @@
   <div data-slot="header"></div>
 
   <main id="main" tabindex="-1">
-    <section class="page-hero">
+    <section class="page-hero page-hero--photo">
+      <div class="page-hero__media" data-render="photo" data-photo="hero-about" data-sizes="100vw" data-eager></div>
       <div class="container">
         <p class="eyebrow" data-i18n="about.hero.eyebrow">About us</p>
         <h1 class="h1" data-i18n="about.hero.title">Accurate imaging, with care.</h1>
@@ -128,6 +130,12 @@
           <p class="eyebrow" data-i18n="about.facilities.title">Facilities</p>
           <h2 class="h2" id="facilities-title" data-i18n="about.facilities.sub">What you will find at Aksharam Diagnostics.</h2>
         </div>
+        <ul class="photo-grid" data-reveal-stagger>
+          <li><figure class="photo-card"><div data-render="photo" data-photo="fac-ct-room" data-sizes="(min-width: 1024px) 280px, (min-width: 640px) 46vw, 92vw"></div><figcaption data-i18n="fac.ct">16-slice MDCT scanner</figcaption></figure></li>
+          <li><figure class="photo-card"><div data-render="photo" data-photo="svc-xray" data-sizes="(min-width: 1024px) 280px, (min-width: 640px) 46vw, 92vw"></div><figcaption data-i18n="fac.xray">Digital X-ray</figcaption></figure></li>
+          <li><figure class="photo-card"><div data-render="photo" data-photo="fac-ultrasound" data-sizes="(min-width: 1024px) 280px, (min-width: 640px) 46vw, 92vw"></div><figcaption data-i18n="fac.usg">Ultrasound with colour Doppler</figcaption></figure></li>
+          <li><figure class="photo-card"><div data-render="photo" data-photo="fac-waiting" data-sizes="(min-width: 1024px) 280px, (min-width: 640px) 46vw, 92vw"></div><figcaption data-i18n="fac.waiting">Waiting area</figcaption></figure></li>
+        </ul>
         <ul class="facility-list" data-reveal-stagger>
           <li><span class="icon-circle"><span data-render="icon" data-icon="ct"></span></span><span data-i18n="fac.ct">16-slice MDCT scanner</span></li>
           <li><span class="icon-circle"><span data-render="icon" data-icon="xray"></span></span><span data-i18n="fac.xray">Digital X-ray</span></li>

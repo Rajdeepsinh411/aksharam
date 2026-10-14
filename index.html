@@ -25,6 +25,8 @@
   <link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin>
   <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&amp;family=Noto+Sans+Gujarati:wght@400;500;600;700&amp;family=Poppins:wght@500;600;700&amp;display=swap">
   <link rel="stylesheet" href="assets/css/style.css">
+  <link rel="preload" as="image" type="image/avif" href="assets/img/stills/step-0-landscape.avif" media="(min-aspect-ratio: 9/10)" fetchpriority="high">
+  <link rel="preload" as="image" type="image/avif" href="assets/img/stills/step-0-portrait.avif" media="(max-aspect-ratio: 9/10)" fetchpriority="high">
   <script>
     (function () {
       var d = document.documentElement;
@@ -38,7 +40,11 @@
     {
       "imports": {
         "three": "https://cdn.jsdelivr.net/npm/three@0.169.0/build/three.module.js",
-        "three/addons/": "https://cdn.jsdelivr.net/npm/three@0.169.0/examples/jsm/"
+        "three/addons/": "https://cdn.jsdelivr.net/npm/three@0.169.0/examples/jsm/",
+        "three/examples/jsm/": "https://cdn.jsdelivr.net/npm/three@0.169.0/examples/jsm/",
+        "postprocessing": "https://cdn.jsdelivr.net/npm/postprocessing@6.36.4/build/index.js",
+        "n8ao": "https://cdn.jsdelivr.net/npm/n8ao@1.9.4/dist/N8AO.js",
+        "detect-gpu": "https://cdn.jsdelivr.net/npm/detect-gpu@5.0.70/dist/detect-gpu.esm.js"
       }
     }
   </script>
@@ -57,53 +63,28 @@
     </div>
   </div>
 
-  <div class="scene" aria-hidden="true"><canvas id="scene-canvas"></canvas></div>
+  <div class="scene" aria-hidden="true">
+    <picture class="scene__poster">
+      <source media="(max-aspect-ratio: 9/10)" type="image/avif" srcset="assets/img/stills/step-0-portrait.avif">
+      <source media="(max-aspect-ratio: 9/10)" type="image/webp" srcset="assets/img/stills/step-0-portrait.webp">
+      <source type="image/avif" srcset="assets/img/stills/step-0-landscape.avif">
+      <img src="assets/img/stills/step-0-landscape.webp" alt="" width="1920" height="1080" fetchpriority="high" decoding="async">
+    </picture>
+    <canvas id="scene-canvas"></canvas>
+    <div class="scene-report" hidden>
+      <span class="scene-report__icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" focusable="false"><path d="M20 6 9 17l-5-5"/></svg></span>
+      <span class="scene-report__body">
+        <span class="scene-report__title" data-i18n="scene.report.title">Report ready</span>
+        <span class="scene-report__sub" data-i18n="scene.report.sub">Prepared by a qualified radiologist</span>
+        <span class="scene-report__lines"><i></i><i></i><i></i></span>
+      </span>
+    </div>
+  </div>
 
   <main id="main" tabindex="-1">
     <!-- 3D story: each step drives one stage of the scene -->
     <section class="story" id="story" aria-label="How a scan happens">
       <div class="story-step story-step--hero">
-        <svg class="hero-fallback" viewBox="0 0 640 480" aria-hidden="true" focusable="false">
-          <defs>
-            <radialGradient id="fb-floor" cx="50%" cy="50%" r="50%">
-              <stop offset="0" stop-color="#000" stop-opacity=".5" />
-              <stop offset="1" stop-color="#000" stop-opacity="0" />
-            </radialGradient>
-            <linearGradient id="fb-shell" x1="0" y1="0" x2="1" y2="1">
-              <stop offset="0" stop-color="#ffffff" />
-              <stop offset="1" stop-color="#cdd1d7" />
-            </linearGradient>
-            <linearGradient id="fb-patient" x1="0" y1="0" x2="0" y2="1">
-              <stop offset="0" stop-color="#eef3f8" stop-opacity=".85" />
-              <stop offset="1" stop-color="#c3cedb" stop-opacity=".55" />
-            </linearGradient>
-          </defs>
-          <g fill="none" stroke="#3c4047" stroke-width="2" stroke-linecap="round">
-            <path d="M90 452a330 46 0 0 1 560 0" opacity=".9" />
-            <path d="M40 468a380 52 0 0 1 640 0" opacity=".6" />
-          </g>
-          <ellipse cx="350" cy="432" rx="270" ry="30" fill="url(#fb-floor)" />
-          <rect x="300" y="350" width="170" height="80" rx="16" fill="#dfe2e6" />
-          <circle cx="385" cy="215" r="170" fill="url(#fb-shell)" />
-          <circle cx="385" cy="215" r="152" fill="none" stroke="#ae1f27" stroke-width="4" />
-          <circle cx="385" cy="215" r="102" fill="#5e6066" />
-          <circle cx="385" cy="215" r="92" fill="none" stroke="#a3a7ad" stroke-width="6" stroke-dasharray="10 14" />
-          <circle cx="385" cy="215" r="84" fill="#25282d" />
-          <rect x="355" y="76" width="60" height="22" rx="7" fill="#2a2d32" />
-          <circle cx="404" cy="87" r="3.5" fill="#ff3a48" />
-          <rect x="118" y="292" width="72" height="140" rx="12" fill="#dfe2e6" />
-          <rect x="96" y="424" width="116" height="10" rx="5" fill="#5e6066" />
-          <rect x="20" y="268" width="420" height="18" rx="9" fill="#ffffff" />
-          <rect x="20" y="284" width="420" height="3" rx="1.5" fill="#ae1f27" />
-          <rect x="30" y="259" width="400" height="11" rx="5.5" fill="#c9d1da" />
-          <rect x="70" y="228" width="300" height="32" rx="16" fill="url(#fb-patient)" />
-          <ellipse cx="392" cy="242" rx="20" ry="18" fill="url(#fb-patient)" />
-          <g fill="none" stroke-linecap="round" stroke-width="5">
-            <path d="M573.6 170A70 70 0 0 1 573.6 260" stroke="#ff3a48" />
-            <path d="M588.9 157.1A90 90 0 0 1 588.9 272.9" stroke="#d3d6db" opacity=".75" />
-            <path d="M604.3 144.3A110 110 0 0 1 604.3 285.7" stroke="#d3d6db" opacity=".45" />
-          </g>
-        </svg>
         <div class="container">
           <div class="hero__content">
             <div class="hero__logo"><img src="assets/img/logo.png" alt="Aksharam Diagnostics" width="588" height="172" fetchpriority="high"></div>
