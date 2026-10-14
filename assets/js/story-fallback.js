@@ -8,6 +8,9 @@
  */
 const STEPS = 6;
 const portraitQuery = window.matchMedia('(max-aspect-ratio: 9/10)');
+const isIOS =
+  /iPhone|iPad|iPod/.test(navigator.userAgent) ||
+  (navigator.maxTouchPoints > 1 && /Macintosh/.test(navigator.userAgent));
 
 function stillPicture(i, eager) {
   const src = (o, ext) => `assets/img/stills/step-${i}-${o}.${ext}`;
@@ -72,19 +75,36 @@ export function initStoryVideo({ sceneEl, story, reportEl, onFail }) {
   const srcFor = () => `assets/video/story-${portraitQuery.matches ? 'portrait' : 'landscape'}.${ext}`;
   video.src = srcFor();
   sceneEl.appendChild(video);
+  // iOS Safari does not always start fetching on its own
+  video.load();
 
-  let target = 0, seeking = false, ready = false;
-  video.addEventListener('seeked', () => (seeking = false));
-  video.addEventListener('loadeddata', () => {
-    ready = true;
-    sceneEl.classList.add('is-live', 'has-video');
-    // iOS only paints seeks after the element has played once
-    video.play().then(() => video.pause()).catch(() => {});
-  });
-  video.addEventListener('error', () => {
+  let target = 0, seekAt = 0, ready = false, failed = false;
+  // Any of these leaves the picture frozen while the text scrolls on, so show the still frames instead.
+  const fail = () => {
+    if (failed) return;
+    failed = true;
+    clearTimeout(readyTimer);
     video.remove();
     if (onFail) onFail();
-  });
+  };
+  const readyTimer = setTimeout(() => !ready && fail(), 8000);
+  const onData = () => {
+    if (ready || failed) return;
+    ready = true;
+    clearTimeout(readyTimer);
+    // iOS only paints seeks after the element has played once. When that is refused
+    // (Low Power Mode, data saver), scrubbing would stay on the first frame.
+    video.play().then(
+      () => {
+        video.pause();
+        sceneEl.classList.add('is-live', 'has-video');
+      },
+      () => (isIOS ? fail() : sceneEl.classList.add('is-live', 'has-video'))
+    );
+  };
+  video.addEventListener('loadeddata', onData);
+  video.addEventListener('canplay', onData);
+  video.addEventListener('error', fail);
   portraitQuery.addEventListener('change', () => {
     const tt = video.currentTime;
     video.src = srcFor();
@@ -102,11 +122,13 @@ export function initStoryVideo({ sceneEl, story, reportEl, onFail }) {
     window.addEventListener('scroll', () => (target = progress()), { passive: true });
   }
   let shown = false;
-  const tick = () => {
-    if (ready && !seeking && video.duration) {
+  const tick = (now) => {
+    if (failed) return;
+    // one seek at a time; Safari sometimes never finishes one, so don't wait on it forever
+    if (ready && video.duration && (!video.seeking || now - seekAt > 600)) {
       const t = target * (video.duration - 0.05);
       if (Math.abs(video.currentTime - t) > 1 / 48) {
-        seeking = true;
+        seekAt = now;
         video.currentTime = t;
       }
     }
